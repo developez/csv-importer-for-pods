@@ -8,6 +8,10 @@ You can upload the csv file using the wordpress uploader, see a log of your impo
 
 This plugin is compatible with every kinds of pods included User (extended) pod.  
 
+# = 0.7 =
+
+* Improvements about gui interface to understand better the instructions
+
 # = 0.6 =
 * A functional csv importer for pods.
 * You can upload the csv file using the wordpress uploader, see a log of your importing, importing between two row indexes and obtain the format of the csv for the any pod.

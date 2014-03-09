@@ -3,7 +3,7 @@
 Plugin Name: CSV Importer For Pods
 Plugin URI: 
 Description: A CSV Importer for Pods. You can find the plugin's section in Tools -> CSV Importer For Pods
-Version: 0.6
+Version: 0.7
 Author: Daniel López - dlopezgonzalez@gmail.com
 Author URI: http://www.devlopez.com
 License: GPL2
@@ -12,8 +12,7 @@ include_once("parsecsv.lib.php");
 //HOOKS
 add_action('init','pods_csv_importer_init');
 
-function pods_csv_importer_init(){
-    
+function pods_csv_importer_init(){   
 
 }
 
@@ -21,92 +20,106 @@ add_action( 'admin_menu', 'register_pods_csv_importer_menu_page' );
 
 function register_pods_csv_importer_menu_page(){
     //add_menu_page( 'Pods CSV Importer', 'Pods CSV Importer', 'manage_options', 'podcsvsimporter', 'pods_csv_importer_admin_page', '', 6 ); 
-    add_management_page('CSV Importer For Pods', 'CSV Importer For Pods', 'manage_options', 'pods-csv-importer', 'pods_csv_importer_admin_page');
+    add_management_page('CSV Importer For Pods', 'CSV Importer For Pods', 'manage_options', 'csv-importer-for-pods', 'pods_csv_importer_admin_page');
 }
 
 function pods_csv_importer_admin_page(){
   
 ?>
 <div class="wrap">
-<h2><?php echo __('CSV Importer for Pods 0.6','pods-csv-importer'); ?></h2>
-<p class="description"><?php echo __('This plugin only works with <a href="http://wordpress.org/plugins/pods/" target="_blank">Pods</a> installed.','pods-csv-importer'); ?></p>
-<h3 class="title"><?php echo __('Choose file selection:','pods-csv-importer'); ?></h3>
+<h2><?php echo __('CSV Importer for Pods 0.7','csv-importer-for-pods'); ?></h2>
+<p class="description"><?php echo __('This plugin only works with <a href="http://wordpress.org/plugins/pods/" target="_blank">Pods</a> installed.','csv-importer-for-pods'); ?></p>
+<h3 class="title"><?php echo __('0. See the csv format of your pod','csv-importer-for-pods'); ?></h3>
+<table class="form-table">
+  <tbody>  
+    <tr valign="top">
+      <th scope="row"><label for="podname"><?php echo __('What is the format of my pod?','csv-importer-for-pods'); ?></label></th>
+      <td>
+		<input name="podnametoformat" id="podnametoformat" value="" class="regular-text" type="text">
+		<input id="format" class="button button-primary" value="See the csv format" type="submit">
+		<p class="description"><?php echo __('Write the pod name to see the csv format. It is necessary al least one item inserted manually to see the format.','csv-importer-for-pods'); ?>.</p>
+		<span><strong><?php echo __('CSV file format for this pod (Help information to build your own file):','csv-importer-for-pods'); ?></span></strong><br>
+		<textarea rows="2" cols="50" readonly id="pod_csv_format"></textarea></p>	  
+	  </td>
+	</tr>
+</table>
+	
+	  
+<h3 class="title"><?php echo __('1. Select the csv file:','csv-importer-for-pods'); ?></h3>
 <table class="form-table">
   <tbody>
     
     <tr valign="top">
-      <th scope="row" colspan="2"><input type="radio" name="file_type" value="media" checked><strong><?php echo __('Use Wordpress uploader','pods-csv-importer'); ?></strong></th>
+      <th scope="row" colspan="2"><input type="radio" name="file_type" value="media" checked><strong><?php echo __('Use Wordpress uploader','csv-importer-for-pods'); ?></strong></th>
     </tr>
     
     <tr valign="top">
       <th scope="row">
         <label for="podname">
-         	<?php echo __('File from media','pods-csv-importer'); ?>
+         	<?php echo __('File from media','csv-importer-for-pods'); ?>
         </label>
       </th>
       <td>
         <div class="uploader">
           <input type="text" name="settings[_unique_name]" id="fileurl" class="regular-text" readonly /><br>        
-          <input class="button" name="_unique_name_button" id="_unique_name_button" value="<?php echo __('Upload or choose','pods-csv-importer'); ?>" /><br>
+          <input class="button" name="_unique_name_button" id="_unique_name_button" value="<?php echo __('Upload or choose','csv-importer-for-pods'); ?>" /><br>
           <input type="text" name="fileid" id="fileid" hidden class="regular-text"/>
         </div>
       </td>
     </tr>
     
     <tr valign="top">
-      <th colspan="2" scope="row"><input type="radio" name="file_type" value="ftp"><strong><?php echo __('Use file located in "wp-content/plugins/pod-csv-importer/files"','pods-csv-importer'); ?></strong></th>
+      <th colspan="2" scope="row"><input type="radio" name="file_type" value="ftp"><strong><?php echo __('Use file located in "wp-content/plugins/pod-csv-importer/files"','csv-importer-for-pods'); ?></strong></th>
     </tr>
     
     <tr valign="top">
-      <th scope="row"><label for="filename"><?php echo __('Filename','pods-csv-importer'); ?></label></th>
+      <th scope="row"><label for="filename"><?php echo __('Filename','csv-importer-for-pods'); ?></label></th>
       <td><input name="filename" id="filename" value="" class="regular-text" type="text"></td>      
     </tr> 
     
  </tbody>
 </table>
 
-<h3 class="title"><?php echo __('Enter pod parameters:','pods-csv-importer'); ?></h3>
+<h3 class="title"><?php echo __('2. Select the pod and the pod parameters:','csv-importer-for-pods'); ?></h3>
 <table class="form-table">
   <tbody>  
     <tr valign="top">
-      <th scope="row"><label for="podname"><?php echo __('Pod name','pods-csv-importer'); ?></label></th>
-      <td><input name="podname" id="podname" value="" class="regular-text" type="text"><input id="format" class="button button-primary" value="See the csv format" type="submit">
-	  <p class="description"><?php echo __('Put the pod name. To see the format of the csv for the pod, click to the button (it necessary at least one entity inserted)','pods-csv-importer'); ?>.</p>
-	  <span><strong><?php echo __('CSV file format for this pod (Help information to build your own file):','pods-csv-importer'); ?></span></strong><br>
-	  <textarea rows="2" cols="10" readonly id="pod_csv_format"></textarea>
+      <th scope="row"><label for="podname"><?php echo __('Pod name','csv-importer-for-pods'); ?></label></th>
+      <td><input name="podname" id="podname" value="" class="regular-text" type="text">
+	  <p class="description"><?php echo __('Write the name of the pod (ex: product)','csv-importer-for-pods'); ?></p>	  
 	  </td>
 	</tr>
     
     <tr valign="top">
-      <th scope="row"><label for="podname"><?php echo __('Many relation fields (comma separated)','pods-csv-importer'); ?></label></th>
+      <th scope="row"><label for="podname"><?php echo __('Fields one-to-many in the pod(comma separated)','csv-importer-for-pods'); ?></label></th>
       <td><input name="mv_pod_fields" id="mv_pod_fields" value="" class="regular-text" type="text">
-	  <p class="description"><?php echo __('If a field is a relation one-to-many field, you need put here the field name (column name).<br>' . 
-										   'Then in the csv, you need to put the values of the items related separated by dot-comma (normally the value is the field called name).<br>' . 
-										   'Example: We have a Garage Pods and a Car Pods (one-to-many relation). If we want to relate three cars with a garage, the csv will have this form:<br>'.
+	  <p class="description"><?php echo __('If a field of the pod is a relation one-to-many field, you need put here the field name (column name).<br>' . 
+										   'Then in the csv file, you need to put the values of the items related, separated by dot-comma (normally the value of the field must be "name" in the ACT pods and "post_title" in CPT).<br>' . 
+										   'Example: If we have two pods, one called "garages" and the other "cars", we could add a garage with three cars with this csv:<br>'.
 										   '<i>name,cars<br>'.
-										   'name,"car1;car2;car3"<br></i>','pods-csv-importer'); ?></p>
+										   'name,"car1;car2;car3"<br></i>','csv-importer-for-pods'); ?></p>
 	  </td>
     </tr>
     
     <tr valign="top">
-      <th scope="row"><label for="maxnumber"><?php echo __('Amount of rows imported in each call','pods-csv-importer'); ?></label></th>
+      <th scope="row"><label for="maxnumber"><?php echo __('Amount of rows imported in each call','csv-importer-for-pods'); ?></label></th>
       <td>100<!--<input name="maxnumber" type="number" min="0" max="500" step="10" id="maxnumber" value="100" class="small-text">-->
-	  <p class="description"><?php echo __('An importing needs many calls if the file is big, csv importer will import 100 rows in each call.','pods-csv-importer'); ?></p></td>
+	  <p class="description"><?php echo __('An import requires several calls if the file is big, csv importer will import 100 rows in each call.','csv-importer-for-pods'); ?></p></td>
     </tr>
     
 	<tr valign="top">
-      <th colspan="2" scope="row"><input type="radio" name="import_type" value="all" checked><strong><?php echo __('Import all rows','pods-csv-importer'); ?></strong>
-	  <p class="description"><?php echo __('Import all rows of the file selected.','pods-csv-importer'); ?></p>
+      <th colspan="2" scope="row"><input type="radio" name="import_type" value="all" checked><strong><?php echo __('Import all rows','csv-importer-for-pods'); ?></strong>
+	  <p class="description"><?php echo __('Import all rows of the file selected.','csv-importer-for-pods'); ?></p>
 	  </th>
     </tr>
 	
 	<tr valign="top">
-      <th colspan="1" scope="row"><input type="radio" name="import_type" value="indexes"><strong><?php echo __('Import rows by indexes','pods-csv-importer'); ?></strong>
-	  <p class="description"><?php echo __('Import rows from a start row number to an end row number of the file selected.','pods-csv-importer'); ?></p>
+      <th colspan="1" scope="row"><input type="radio" name="import_type" value="indexes"><strong><?php echo __('Import rows by indexes','csv-importer-for-pods'); ?></strong>
 	  </th>
 	  <td>
-	  <p><label for="podname"><?php echo __('Start index: ','pods-csv-importer'); ?></label><input style=" width: 8%; " name="ib" id="ib" value="1" class="regular-text" type="text">
-	  <label for="podname"><?php echo __('End index: ','pods-csv-importer'); ?></label><input style=" width: 8%; " name="ie" id="ie" value="100" class="regular-text" type="text">
+	  <p><label for="podname"><?php echo __('Start index: ','csv-importer-for-pods'); ?></label><input style=" width: 8%; " name="ib" id="ib" value="1" class="regular-text" type="text">
+	  <label for="podname"><?php echo __('End index: ','csv-importer-for-pods'); ?></label><input style=" width: 8%; " name="ie" id="ie" value="100" class="regular-text" type="text">
+	  <p class="description"><?php echo __('Import rows from a start row number to an end row number of the file selected.','csv-importer-for-pods'); ?></p>
 	  </p>
 	  </td>
 	</tr>
@@ -117,7 +130,7 @@ function pods_csv_importer_admin_page(){
       <td>        
         <label for=""><input name="submit" id="import" class="button button-primary" value="Import Pods" type="submit"></label>
 		<span class="executing"></span>
-		<p class="description"><?php echo __('Wait until you see the message "Finish!"', 'pods-csv-importer'); ?></p>
+		<p class="description"><?php echo __('Wait until you see the message "Finish!"', 'csv-importer-for-pods'); ?></p>
       </td>
     </tr>
     <!--
@@ -133,13 +146,13 @@ function pods_csv_importer_admin_page(){
     <tr valign="top">
       <th scope="row">
         <label for="podname">
-         	<?php echo __('Results','pods-csv-importer'); ?>
+         	<?php echo __('Results','csv-importer-for-pods'); ?>
         </label>
       </th>
       <td>
-      	<label id="result">
-         	
-        </label>
+      	<div id="result" style="background: lightgrey; width: 100%;">
+         	Here you will see the messages of the import process.
+        </div>
 		<p class="description">
       </td>
     </tr>    
@@ -147,18 +160,18 @@ function pods_csv_importer_admin_page(){
 	<tr valign="top">
       <th scope="row">
         <label for="podname">
-         	<?php echo __('Logs','pods-csv-importer'); ?>
+         	<?php echo __('Logs','csv-importer-for-pods'); ?>
         </label>
       </th>
       <td>      	
-		<p class="description"><?php echo __('See the last log here:', 'pods-csv-importer'); ?><a href="<?php echo plugin_dir_url( __FILE__ ).'import-log.txt'; ?>">import-log.txt</a>
+		<p class="description"><?php echo __('See the last log here:', 'csv-importer-for-pods'); ?><a href="<?php echo plugin_dir_url( __FILE__ ).'import-log.txt'; ?>">import-log.txt</a>
       </td>
     </tr>    
 
 	<tr valign="top">
       <th scope="row">
         <label for="podname">
-         	<?php echo __('Send your comments to the author','pods-csv-importer'); ?>
+         	<?php echo __('Send your comments to the author','csv-importer-for-pods'); ?>
         </label>
       </th>
       <td>
@@ -206,14 +219,14 @@ function pods_csv_importer_admin_page(){
 				try{
 					obj=JSON.parse(data);
 				}catch(e){
-					$("label#result").append("Error: " + data);	
+					$("div#result").append("Error: " + data);	
 					obj = null;
 				}
 				
 				if(obj != null){
 					if(obj.success){
 						var msg = obj.msg + "<br>";
-						$("label#result").append(msg);		
+						$("div#result").append(msg);		
 						if(!obj.end){
 							if(!finish){
 								import_csv(pod, mv_pod_fields, type, file, ib + offset, ie + offset, finish);
@@ -221,11 +234,11 @@ function pods_csv_importer_admin_page(){
 								notify_finish();
 							}
 						}else{
-							$("label#result").append("Finish!");
+							$("div#result").append("Finish!");
 							notify_finish();
 						}
 					}else{
-						$("label#result").append(obj.msg);
+						$("div#result").append(obj.msg);
 						notify_finish();
 					}
 				}else{
@@ -233,13 +246,13 @@ function pods_csv_importer_admin_page(){
 				}				
 			})
 			.fail(function() {           
-				$("label#result").append("Error");		
+				$("div#result").append("Error");		
 				notify_finish();
 			});         
 		}
 		
 		$("input#format").click(function(e) { 
-			var pod = $("input#podname").val();
+			var pod = $("input#podnametoformat").val();
 			var data = { action: 'show_fields', pod: pod};
 			$.get( ajaxurl, data )
 			.done(function( data ) {
@@ -274,14 +287,14 @@ function pods_csv_importer_admin_page(){
 				if(isNaN(parseInt(ib)) || 
 				   isNaN(parseInt(ie)))
 				{   
-					$("label#result").html('Index entries are incorrect');
+					$("div#result").html('Index entries are incorrect');
 					return;
 				}			
 				finish = true;
 			}
 			
 			notify_execution();
-			$("label#result").html('');
+			$("div#result").html('');
 			import_csv(pod, mv_pod_fields, type, file, ib, ie, finish);
 	      
 		});
@@ -339,6 +352,11 @@ function show_fields_callback() {
 	$pods = pods( $pod_name, $params );
 	$data = $pods->export(); 
 
+	if($data == null || count($data) == 0){
+		echo __('Sorry, or your pod does not exist or you need to add one item manually of that pod to see the format.', 'csv-importer-for-pods');
+		return;
+	}
+	
 	foreach(array_keys($data) as $key)
 	{
 	   echo '"'.$key.'",';
@@ -349,7 +367,7 @@ function show_fields_callback() {
 	   echo '"'.$pods->display($key).'",';
 	}
 	
-	die(); // this is required to return a proper result
+	return; // this is required to return a proper result
 }
 
 add_action( 'wp_ajax_import_pod', 'import_pod_callback' );

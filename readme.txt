@@ -4,7 +4,7 @@ Donate link: http://www.devlopez.com/
 Tags: csv, pods
 Requires at least: 3.0.1
 Tested up to: 3.8.1
-Stable tag: 0.6
+Stable tag: 0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,9 @@ After the standard manual or automatic plugin installation procedure, you'll be 
 1. Here's a screenshot of it in action
 
 == Changelog ==
+
+= 0.7 =
+* Improvements about gui interface to understand better the instructions
 
 = 0.6 =
 * A functional csv importer for pods.
