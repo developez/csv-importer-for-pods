@@ -3,7 +3,7 @@
 Plugin Name: CSV Importer For Pods
 Plugin URI: 
 Description: A CSV Importer for Pods. You can find the plugin's section in Tools -> CSV Importer For Pods
-Version: 0.7
+Version: 0.8
 Author: Daniel López - dlopezgonzalez@gmail.com
 Author URI: http://www.devlopez.com
 License: GPL2
@@ -378,7 +378,7 @@ function import_pod_callback() {
 
 	$meta_key_prefix = "meta_key_";
 	$log_filename = "import-log.txt";
-
+	$extra_msg = "";
 	$pod_name = "";
 	$file_name = "";
 	$file_id = "";
@@ -419,12 +419,12 @@ function import_pod_callback() {
 	if($file_type === "ftp"){
 	  
 	  $pod_file_path = plugin_dir_path( __FILE__ )."files/".$pod_name;
-	  $multivalue_pod_file_path = plugin_dir_path( __FILE__ )."files/".$pod_name . "_multivalues.txt";
+	  //$multivalue_pod_file_path = plugin_dir_path( __FILE__ )."files/".$pod_name . "_multivalues.txt";
 	  
 	} else if($file_type === "media") {
 	  
 	  $pod_file_path = get_attached_file($file_id);
-	  $multivalue_pod_file_path = get_attached_file($multivalue_file_id);
+	  //$multivalue_pod_file_path = get_attached_file($multivalue_file_id);
 	  
 	}
 
@@ -491,8 +491,8 @@ function import_pod_callback() {
 						
 			//Add meta key
 			for($k = 0; $k < count($ids); $k++){
-				
-				if($data[$k]["post_type"] === "post"){			
+			
+				if(array_key_exists("post_type",$data[$k]) && $data[$k]["post_type"] === "post"){			
 					
 					foreach($data[$k] as $key => $value){
 						//Starts with "meta_key_"
@@ -508,6 +508,7 @@ function import_pod_callback() {
 					}
 				}else{
 				}
+				
 			}
 			
 			file_put_contents($log_filename, "Row number $i imported\r\n", FILE_APPEND | LOCK_EX);

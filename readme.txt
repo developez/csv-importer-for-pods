@@ -28,6 +28,11 @@ After the standard manual or automatic plugin installation procedure, you'll be 
 
 == Changelog ==
 
+= 0.8 =
+
+* Little fixes of undefined variables.
+* Better instructions in the admin page.
+
 = 0.7 =
 * Improvements about gui interface to understand better the instructions
 
