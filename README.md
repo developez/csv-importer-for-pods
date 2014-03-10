@@ -8,6 +8,11 @@ You can upload the csv file using the wordpress uploader, see a log of your impo
 
 This plugin is compatible with every kinds of pods included User (extended) pod.  
 
+# = 0.8 =
+
+* Little fixes of undefined variables.
+* Better instructions in the admin page.
+
 # = 0.7 =
 
 * Improvements about gui interface to understand better the instructions
