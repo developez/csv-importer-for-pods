@@ -37,8 +37,8 @@ function pods_csv_importer_admin_page(){
       <td>
 		<input name="podnametoformat" id="podnametoformat" value="" class="regular-text" type="text">
 		<input id="format" class="button button-primary" value="See the csv format" type="submit">
-		<p class="description"><?php echo __('Write the pod name to see the csv format. It is necessary al least one item inserted manually to see the format.','csv-importer-for-pods'); ?>.</p>
-		<span><strong><?php echo __('CSV file format for this pod (Help information to build your own file):','csv-importer-for-pods'); ?></span></strong><br>
+		<p class="description"><?php echo __('Enter the name of your Pod to see the csv format. The Pod must have at least one item.','csv-importer-for-pods'); ?>.</p>
+		<span><strong><?php echo __('The format that your CSV file must be in for this Pod.','csv-importer-for-pods'); ?></span></strong><br>
 		<textarea rows="2" cols="50" readonly id="pod_csv_format"></textarea></p>	  
 	  </td>
 	</tr>
@@ -50,13 +50,13 @@ function pods_csv_importer_admin_page(){
   <tbody>
     
     <tr valign="top">
-      <th scope="row" colspan="2"><input type="radio" name="file_type" value="media" checked><strong><?php echo __('Use Wordpress uploader','csv-importer-for-pods'); ?></strong></th>
+      <th scope="row" colspan="2"><input type="radio" name="file_type" value="media" checked><strong><?php echo __('Use The WordPress uploader','csv-importer-for-pods'); ?></strong></th>
     </tr>
     
     <tr valign="top">
       <th scope="row">
         <label for="podname">
-         	<?php echo __('File from media','csv-importer-for-pods'); ?>
+         	<?php echo __('File from the media manager','csv-importer-for-pods'); ?>
         </label>
       </th>
       <td>
@@ -80,29 +80,29 @@ function pods_csv_importer_admin_page(){
  </tbody>
 </table>
 
-<h3 class="title"><?php echo __('2. Select the pod and the pod parameters:','csv-importer-for-pods'); ?></h3>
+<h3 class="title"><?php echo __('2. Select the Pod and the Pod\'s parameters:','csv-importer-for-pods'); ?></h3>
 <table class="form-table">
   <tbody>  
     <tr valign="top">
       <th scope="row"><label for="podname"><?php echo __('Pod name','csv-importer-for-pods'); ?></label></th>
       <td><input name="podname" id="podname" value="" class="regular-text" type="text">
-	  <p class="description"><?php echo __('Write the name of the pod (ex: product)','csv-importer-for-pods'); ?></p>	  
+	  <p class="description"><?php echo __('Enter the name of the Pod (ex: product)','csv-importer-for-pods'); ?></p>	  
 	  </td>
 	</tr>
     
     <tr valign="top">
-      <th scope="row"><label for="podname"><?php echo __('Fields one-to-many in the pod(comma separated)','csv-importer-for-pods'); ?></label></th>
+      <th scope="row"><label for="podname"><?php echo __('Fields one-to-many in the Pod( comma separated)','csv-importer-for-pods'); ?></label></th>
       <td><input name="mv_pod_fields" id="mv_pod_fields" value="" class="regular-text" type="text">
-	  <p class="description"><?php echo __('If a field of the pod is a relation one-to-many field, you need put here the field name (column name).<br>' . 
+	  <p class="description"><?php echo __('If a field of the Pod has a one-to-many relation field, you need tp put  the field name (column name) here.<br>' . 
 										   'Then in the csv file, you need to put the values of the items related, separated by dot-comma (normally the value of the field must be "name" in the ACT pods and "post_title" in CPT).<br>' . 
-										   'Example: If we have two pods, one called "garages" and the other "cars", we could add a garage with three cars with this csv:<br>'.
+										   'Example: If we have two Pods, one called "garages" and the other "cars", you can add a garage with three cars with this csv:<br>'.
 										   '<i>name,cars<br>'.
 										   'name,"car1;car2;car3"<br></i>','csv-importer-for-pods'); ?></p>
 	  </td>
     </tr>
     
     <tr valign="top">
-      <th scope="row"><label for="maxnumber"><?php echo __('Amount of rows imported in each call','csv-importer-for-pods'); ?></label></th>
+      <th scope="row"><label for="maxnumber"><?php echo __('Number of rows imported in each call','csv-importer-for-pods'); ?></label></th>
       <td>100<!--<input name="maxnumber" type="number" min="0" max="500" step="10" id="maxnumber" value="100" class="small-text">-->
 	  <p class="description"><?php echo __('An import requires several calls if the file is big, csv importer will import 100 rows in each call.','csv-importer-for-pods'); ?></p></td>
     </tr>
